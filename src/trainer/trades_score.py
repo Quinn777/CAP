@@ -100,7 +100,7 @@ def trades_loss(
     return loss, loss_natural.mean(), loss_robust.mean()
 
 
-def train(model, dataloader, optimizer, args, epoch, device, logger, es, AttackPolicy):
+def train(model, dataloader, optimizer, args, epoch, device, logger, AttackPolicy):
     batch_time = AverageMeter("Time", ":6.3f")
     losses = AverageMeter("Loss", ":.4f")
     nat_losses = AverageMeter("Natural Loss", ":.4f")
@@ -152,4 +152,4 @@ def train(model, dataloader, optimizer, args, epoch, device, logger, es, AttackP
         if i % args.print_freq == 0:
             progress.display(i)
 
-    return es, model, losses.avg, nat_losses.avg, rob_losses.avg, top1.avg
+    return model, losses.avg, nat_losses.avg, rob_losses.avg, top1.avg

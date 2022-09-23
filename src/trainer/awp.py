@@ -122,7 +122,7 @@ def awp_loss(
     return loss, loss_natural, loss_robust*beta
 
 
-def train(model, dataloader, optimizer, args, epoch, device, logger, awp_adversary, es, AttackPolicy):
+def train(model, dataloader, optimizer, args, epoch, device, logger, awp_adversary, AttackPolicy):
     batch_time = AverageMeter("Time", ":6.3f")
     losses = AverageMeter("Loss", ":.4f")
     nat_losses = AverageMeter("Natural Loss", ":.4f")
@@ -174,4 +174,4 @@ def train(model, dataloader, optimizer, args, epoch, device, logger, awp_adversa
             progress.display(i)
     progress.display(i)
 
-    return es, model, losses.avg, nat_losses.avg, rob_losses.avg, top1.avg
+    return model, losses.avg, nat_losses.avg, rob_losses.avg, top1.avg

@@ -3,7 +3,7 @@ from .utils.schedules import *
 import torchvision
 from .utils.utils import *
 import importlib
-# from .utils.anpgd import get_adversaries
+import torch.nn as nn
 from .utils.mma_trainer import MMATrainer
 from .utils.utils_awp import *
 import copy

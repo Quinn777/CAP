@@ -148,7 +148,7 @@ def consistency_loss(
     return loss, 0, 0
 
 
-def train(model, dataloader, optimizer, args, epoch, device, logger, es, AttackPolicy):
+def train(model, dataloader, optimizer, args, epoch, device, logger, AttackPolicy):
     batch_time = AverageMeter("Time", ":6.3f")
     losses = AverageMeter("Loss", ":.4f")
     nat_losses = AverageMeter("Natural Loss", ":.4f")
@@ -167,9 +167,6 @@ def train(model, dataloader, optimizer, args, epoch, device, logger, es, AttackP
         x_aug = data[0][1].to(device)
         images_pair = torch.cat([x_natural, x_aug], dim=0)
         label = data[1][0].to(device)
-        # images = torch.cat(data[0], dim=0).to(device)
-        # labels = torch.cat(data[1], dim=0).to(device)
-        # calculate robust loss
         nat_output = model(x_natural)
         loss, nat_loss, rob_loss = consistency_loss(
             model=model,
@@ -203,4 +200,4 @@ def train(model, dataloader, optimizer, args, epoch, device, logger, es, AttackP
         if i % args.print_freq == 0:
             progress.display(i)
 
-    return es, model, losses.avg, nat_losses.avg, rob_losses.avg, top1.avg
+    return model, losses.avg, nat_losses.avg, rob_losses.avg, top1.avg

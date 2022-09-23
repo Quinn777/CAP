@@ -8,7 +8,7 @@ accuracy = importlib.import_module(f"src.utils.metrics").accuracy
 show_tensor = importlib.import_module("src.utils.visualize").show_tensor
 
 
-def train(model, dataloader, optimizer, args, epoch, device, logger, es, AttackPolicy):
+def train(model, dataloader, optimizer, args, epoch, device, logger, AttackPolicy):
     batch_time = AverageMeter("Time", ":6.3f")
     losses = AverageMeter("Loss", ":.4f")
     top1 = AverageMeter("Acc_1", ":6.2f")
@@ -45,4 +45,4 @@ def train(model, dataloader, optimizer, args, epoch, device, logger, es, AttackP
             progress.display(i)
     progress.display(i)
 
-    return es, model, losses.avg, 0, 0, top1.avg
+    return model, losses.avg, 0, 0, top1.avg
