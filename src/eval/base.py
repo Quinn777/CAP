@@ -27,7 +27,6 @@ def test(model, criterion, dataloader, opt, device, logger):
         images = data[0].to(device)
         labels = data[1].to(device)
 
-        # get_attn(model, images)
         # clean images
         outputs = model(images)
         # Predict

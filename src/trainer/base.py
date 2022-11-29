@@ -5,7 +5,6 @@ import torch.nn as nn
 AverageMeter = importlib.import_module(f"src.utils.metrics").AverageMeter
 ProgressMeter = importlib.import_module(f"src.utils.metrics").ProgressMeter
 accuracy = importlib.import_module(f"src.utils.metrics").accuracy
-show_tensor = importlib.import_module("src.utils.visualize").show_tensor
 
 
 def train(model, dataloader, optimizer, args, epoch, device, logger, AttackPolicy):

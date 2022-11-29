@@ -197,21 +197,21 @@ def deit_t_distilled(cl, ll, num_classes, data_name, pretrained):
         norm_layer=partial(nn.LayerNorm, eps=1e-6), )
     model.default_cfg = _cfg()
     pretrained_model = ""
-    if pretrained:
-        if data_name == "SARS_COV_2":
-            pretrained_model = "/best_clean_model_pretrain.pth.tar"
-        elif data_name == "MosMed_L":
-            pretrained_model = "/best_clean_model_pretrain.pth.tar"
-
-    ckpt = torch.load(
-        pretrained_model,
-        map_location='cpu')
-    model_dict = model.state_dict()
-    pretrained_dict = {}
-    for k, v in ckpt["state_dict"].items():
-        if k in model_dict:
-            if np.shape(model_dict[k]) == np.shape(v):
-                pretrained_dict[k] = v
-    model_dict.update(pretrained_dict)
-    model.load_state_dict(model_dict, strict=False)
+    # if pretrained:
+    #     if data_name == "SARS_COV_2":
+    #         pretrained_model = "/best_clean_model_pretrain.pth.tar"
+    #     elif data_name == "MosMed_L":
+    #         pretrained_model = "/best_clean_model_pretrain.pth.tar"
+    #
+    # ckpt = torch.load(
+    #     pretrained_model,
+    #     map_location='cpu')
+    # model_dict = model.state_dict()
+    # pretrained_dict = {}
+    # for k, v in ckpt["state_dict"].items():
+    #     if k in model_dict:
+    #         if np.shape(model_dict[k]) == np.shape(v):
+    #             pretrained_dict[k] = v
+    # model_dict.update(pretrained_dict)
+    # model.load_state_dict(model_dict, strict=False)
     return model
