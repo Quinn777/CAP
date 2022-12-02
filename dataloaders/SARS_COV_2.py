@@ -149,6 +149,7 @@ class SARS_COV_2_Folder(Dataset):
                 x = [x, aug_x]
                 y = [y, aug_y]
             else:
+                x = self.pre_transform(x)
                 x = self.post_transform(x)
                 y = torch.tensor(int(self.y[index]))
                 x = x
