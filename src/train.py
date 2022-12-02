@@ -1,12 +1,12 @@
-
 from .utils.schedules import *
 import torchvision
 from .utils.utils import *
 import importlib
 import torch.nn as nn
 from .utils.mma_trainer import MMATrainer
-from .utils.utils_awp import *
+from .utils.weight_noise import *
 import copy
+from .utils.anpgd import get_adversaries, get_mean_loss_fn, get_none_loss_fn
 
 
 class Trainer:
@@ -91,19 +91,21 @@ class Trainer:
                 clean_loss_coeff=args.clean_loss_coeff,
                 adversary=train_adversary,
             )
-        # awp method
+        # AWP
         elif self.args.train_method == 'awp':
             self.proxy_model = copy.deepcopy(self.model)
             self.proxy_model = self.proxy_model.to(self.device)
             self.proxy_optimizer = get_optimizer(self.proxy_model, self.args.optimizer, self.args.lr)
             self.awp_adversary = TradesAWP(model=self.model, proxy=self.proxy_model,
                                            proxy_optim=self.proxy_optimizer, gamma=self.args.awp_gamma)
+        # CAP
         elif self.args.train_method == 'cap':
             self.proxy_model = copy.deepcopy(self.model)
             self.proxy_model = self.proxy_model.to(self.device)
             self.proxy_optimizer = get_optimizer(self.proxy_model, self.args.optimizer, self.args.lr)
             self.cap_adversary = CAP(model=self.model, proxy=self.proxy_model, num_classes=args.num_classes,
-                                          proxy_optim=self.proxy_optimizer, gamma=self.args.awp_gamma)
+                                     proxy_optim=self.proxy_optimizer, gamma=self.args.cap_gamma)
+        # HAT
         elif self.args.train_method == 'hat':
             self.hr_model = copy.deepcopy(self.model)
             if self.args.helper_model is None:
@@ -177,7 +179,6 @@ class Trainer:
                                                                          device=self.device,
                                                                          logger=self.logger,
                                                                          )
-        # Save the model
         # save best model for adv img
         if adv_acc > self.best_adv_model["adv_acc"]:
             self.best_adv_model["path"] = self.save_model(val_acc,

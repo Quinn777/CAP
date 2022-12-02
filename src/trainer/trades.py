@@ -1,14 +1,19 @@
 import time
+
+from tqdm import tqdm
 import torch
 import importlib
+from torch.cuda.amp import autocast as autocast
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable
 import torch.optim as optim
+import matplotlib.pyplot as plt
+import numpy as np
+import math
 AverageMeter = importlib.import_module(f"src.utils.metrics").AverageMeter
 ProgressMeter = importlib.import_module(f"src.utils.metrics").ProgressMeter
 accuracy = importlib.import_module(f"src.utils.metrics").accuracy
-
 
 def trades_loss(
     model,
@@ -93,6 +98,7 @@ def trades_loss(
     loss_robust = (1.0 / batch_size) * criterion_kl(F.log_softmax(model(x_adv), dim=1),
                                                     F.softmax(model(x_natural), dim=1))
     loss = loss_natural + beta * loss_robust
+    # print(f"natural loss: {loss_natural}  robust loss: {loss_robust}")
     return loss, loss_natural, loss_robust*beta
 
 
@@ -108,12 +114,12 @@ def train(model, dataloader, optimizer, args, epoch, device, logger, AttackPolic
         logger,
         prefix="Epoch: [{}]".format(epoch),
     )
-
     end = time.time()
     model.train()
     for i, data in enumerate(dataloader):
         x_natural = data[0].to(device)
         labels = data[1].to(device)
+        # calculate robust loss
         nat_output = model(x_natural)
         loss, nat_loss, rob_loss = trades_loss(
             model=model,

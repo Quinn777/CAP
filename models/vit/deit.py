@@ -63,133 +63,6 @@ class DistilledVisionTransformer(VisionTransformer):
             return (x + x_dist) / 2
 
 
-@register_model
-def deit_tiny_patch16_224(pretrained=True, **kwargs):
-    model = VisionTransformer(
-        patch_size=16, embed_dim=192, depth=12, num_heads=3, mlp_ratio=4, qkv_bias=True,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    if pretrained:
-        checkpoint = torch.hub.load_state_dict_from_url(
-            url="https://dl.fbaipublicfiles.com/deit/deit_tiny_patch16_224-a1311bcf.pth",
-            map_location="cpu", check_hash=True
-        )
-        model.load_state_dict(checkpoint["model"])
-    return model
-
-
-@register_model
-def deit_small_patch16_224(pretrained=False, **kwargs):
-    model = VisionTransformer(
-        patch_size=16, embed_dim=384, depth=12, num_heads=6, mlp_ratio=4, qkv_bias=True,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    return model
-
-
-@register_model
-def deit_base_patch16_224(pretrained=False, **kwargs):
-    model = VisionTransformer(
-        patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    if pretrained:
-        checkpoint = torch.hub.load_state_dict_from_url(
-            url="https://dl.fbaipublicfiles.com/deit/deit_base_patch16_224-b5f2ef4d.pth",
-            map_location="cpu", check_hash=True
-        )
-        model.load_state_dict(checkpoint["model"], strict=False)
-    return model
-
-
-@register_model
-def deit_tiny_distilled_patch16_224(pretrained=False, **kwargs):
-    model = DistilledVisionTransformer(
-        patch_size=16, embed_dim=192, depth=12, num_heads=3, mlp_ratio=4, qkv_bias=True,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    if pretrained:
-        checkpoint = torch.hub.load_state_dict_from_url(
-            url="https://dl.fbaipublicfiles.com/deit/deit_tiny_distilled_patch16_224-b40b3cf7.pth",
-            map_location="cpu", check_hash=True
-        )
-        model.load_state_dict(checkpoint["model"], strict=False)
-    return model
-
-
-@register_model
-def deit_small_distilled_patch16_224(pretrained=False, **kwargs):
-    model = DistilledVisionTransformer(
-        patch_size=16, embed_dim=384, depth=12, num_heads=6, mlp_ratio=4, qkv_bias=True,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    return model
-
-
-@register_model
-def deit_base_distilled_patch16_224(pretrained=False, **kwargs):
-    model = DistilledVisionTransformer(
-        patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    if pretrained:
-        checkpoint = torch.hub.load_state_dict_from_url(
-            url="https://dl.fbaipublicfiles.com/deit/deit_base_distilled_patch16_224-df68dfff.pth",
-            map_location="cpu", check_hash=True
-        )
-        model.load_state_dict(checkpoint["model"])
-    return model
-
-
-@register_model
-def deit_base_patch16_384(pretrained=False, **kwargs):
-    model = VisionTransformer(
-        img_size=384, patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    if pretrained:
-        checkpoint = torch.hub.load_state_dict_from_url(
-            url="https://dl.fbaipublicfiles.com/deit/deit_base_patch16_384-8de9b5d1.pth",
-            map_location="cpu", check_hash=True
-        )
-        model.load_state_dict(checkpoint["model"])
-    return model
-
-
-@register_model
-def deit_base_distilled_patch16_384(pretrained=False, **kwargs):
-    model = DistilledVisionTransformer(
-        img_size=384, patch_size=16, embed_dim=768, depth=12, num_heads=12, mlp_ratio=4, qkv_bias=True,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), **kwargs)
-    model.default_cfg = _cfg()
-    if pretrained:
-        checkpoint = torch.hub.load_state_dict_from_url(
-            url="https://dl.fbaipublicfiles.com/deit/deit_base_distilled_patch16_384-d0272ac0.pth",
-            map_location="cpu", check_hash=True
-        )
-        model.load_state_dict(checkpoint["model"])
-    return model
-
-
-def deit_t(cl, ll, num_classes, pretrained):
-    model = VisionTransformer(
-        conv_layer=cl, linear_layer=ll, num_classes=num_classes,
-        patch_size=16, embed_dim=192, depth=12, num_heads=6, mlp_ratio=4, qkv_bias=True,
-        norm_layer=partial(nn.LayerNorm, eps=1e-6), )
-    model.default_cfg = _cfg()
-
-    if pretrained:
-        checkpoint = torch.hub.load_state_dict_from_url(
-            url="https://dl.fbaipublicfiles.com/deit/deit_tiny_patch16_224-a1311bcf.pth",
-            map_location="cpu", check_hash=True
-        )
-        model_dict = model.state_dict()
-        pretrained_dict = {k: v for k, v in checkpoint["model"].items() if np.shape(model_dict[k]) == np.shape(v)}
-        model_dict.update(pretrained_dict)
-        model.load_state_dict(model_dict, strict=False)
-    return model
-
-
 def deit_t_distilled(cl, ll, num_classes, data_name, pretrained):
     model = DistilledVisionTransformer(
         conv_layer=cl, linear_layer=ll, num_classes=num_classes,
@@ -197,21 +70,21 @@ def deit_t_distilled(cl, ll, num_classes, data_name, pretrained):
         norm_layer=partial(nn.LayerNorm, eps=1e-6), )
     model.default_cfg = _cfg()
     pretrained_model = ""
-    # if pretrained:
-    #     if data_name == "SARS_COV_2":
-    #         pretrained_model = "/best_clean_model_pretrain.pth.tar"
-    #     elif data_name == "MosMed_L":
-    #         pretrained_model = "/best_clean_model_pretrain.pth.tar"
-    #
-    # ckpt = torch.load(
-    #     pretrained_model,
-    #     map_location='cpu')
-    # model_dict = model.state_dict()
-    # pretrained_dict = {}
-    # for k, v in ckpt["state_dict"].items():
-    #     if k in model_dict:
-    #         if np.shape(model_dict[k]) == np.shape(v):
-    #             pretrained_dict[k] = v
-    # model_dict.update(pretrained_dict)
-    # model.load_state_dict(model_dict, strict=False)
+    if pretrained:
+        if data_name == "SARS_COV_2":
+            pretrained_model = "weights/best_clean_model_pretrain_sars_deit.pth.tar"
+        elif data_name == "MosMed_L":
+            pretrained_model = "weights/best_clean_model_pretrain_mosmed_deit.pth.tar"
+
+    ckpt = torch.load(
+        pretrained_model,
+        map_location='cpu')
+    model_dict = model.state_dict()
+    pretrained_dict = {}
+    for k, v in ckpt["state_dict"].items():
+        if k in model_dict:
+            if np.shape(model_dict[k]) == np.shape(v):
+                pretrained_dict[k] = v
+    model_dict.update(pretrained_dict)
+    model.load_state_dict(model_dict, strict=False)
     return model

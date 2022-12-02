@@ -11,7 +11,6 @@ import torch.optim as optim
 AverageMeter = importlib.import_module(f"src.utils.metrics").AverageMeter
 ProgressMeter = importlib.import_module(f"src.utils.metrics").ProgressMeter
 accuracy = importlib.import_module(f"src.utils.metrics").accuracy
-show_tensor = importlib.import_module("src.utils.visualize").show_tensor
 
 
 def awp_loss(
@@ -98,7 +97,6 @@ def awp_loss(
         awp = awp_adversary.calc_awp(inputs_aug=x_adv,
                                      inputs_clean=x_natural,
                                      targets=y,
-                                     targets_aug=y,
                                      beta=args.beta)
         awp_adversary.perturb(awp)
 

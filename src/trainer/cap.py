@@ -17,7 +17,6 @@ def CAP_loss(
         x_natural,
         x_aug,
         y,
-        y_aug,
         optimizer,
         step_size,
         epsilon,
@@ -91,11 +90,10 @@ def CAP_loss(
     model.train()
     x_adv = Variable(torch.clamp(x_adv, clip_min, clip_max), requires_grad=False)
 
-    if epoch >= args.awp_warmup:
+    if epoch >= args.cap_warmup:
         cap = cap_adversary.calc_cap(inputs_aug=x_aug,
                                      inputs_clean=x_natural,
                                      targets=y,
-                                     targets_aug=y_aug,
                                      beta=args.beta)
         cap_adversary.perturb(cap)
 
@@ -120,7 +118,7 @@ def CAP_loss(
     loss.backward()
     optimizer.step()
 
-    if epoch >= args.awp_warmup:
+    if epoch >= args.cap_warmup:
         cap_adversary.restore(cap)
 
     return loss, loss_natural.mean(), loss_robust.mean(),
@@ -145,7 +143,6 @@ def train(model, dataloader, optimizer, args, epoch, device, logger, cap_adversa
         x_natural = data[0][0].to(device)
         x_aug = data[0][1].to(device)
         label = data[1][0].to(device)
-        label_aug = data[1][0].to(device)
 
         nat_output = model(x_natural)
         # calculate robust loss
@@ -154,7 +151,6 @@ def train(model, dataloader, optimizer, args, epoch, device, logger, cap_adversa
             x_natural=x_natural,
             x_aug=x_aug,
             y=label,
-            y_aug=label_aug,
             optimizer=optimizer,
             step_size=step_size,
             epsilon=epsilon,

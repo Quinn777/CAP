@@ -445,9 +445,9 @@ def visformer_tiny(conv_layer, linear_layer, input_size, num_classes, data_name,
     pretrained_model = ""
     if pretrained:
         if data_name == "SARS_COV_2":
-            pretrained_model = "/share_data/xiangkun/CAP/best_clean_model_pretrain_sars_visformer.pth.tar"
+            pretrained_model = "weights/best_clean_model_pretrain_sars_visformer.pth.tar"
         elif data_name == "MosMed_L":
-            pretrained_model = "/share_data/xiangkun/CAP/best_clean_model_pretrain_mosmed_visformer.pth.tar"
+            pretrained_model = "weights/best_clean_model_pretrain_mosmed_visformer.pth.tar"
 
     ckpt = torch.load(
         pretrained_model,
@@ -459,18 +459,3 @@ def visformer_tiny(conv_layer, linear_layer, input_size, num_classes, data_name,
     model.load_state_dict(model_dict, strict=False)
     return model
 
-
-def visformer_small(conv_layer, linear_layer, input_size, num_classes, **kwargs):
-    model = Visformer(conv_layer, linear_layer, img_size=input_size, init_channels=32, embed_dim=384, depth=[7, 4, 4],
-                      num_heads=6, mlp_ratio=4.,
-                      group=8, num_classes=num_classes,
-                      attn_stage='011', spatial_conv='100', norm_layer=BatchNorm, conv_init=True,
-                      embedding_norm=BatchNorm, **kwargs)
-    ckpt = torch.load(
-        "best_clean_model_pretrain.pth.tar",
-        map_location='cpu')
-    model_dict = model.state_dict()
-    pretrained_dict = {k: v for k, v in ckpt["state_dict"].items() if np.shape(model_dict[k]) == np.shape(v)}
-    model_dict.update(pretrained_dict)
-    model.load_state_dict(model_dict, strict=False)
-    return model
