@@ -10,7 +10,7 @@ As the COVID-19 pandemic puts pressure on healthcare systems worldwide, the comp
 
 ![image-20221202213940039](http://xiangkun-img.oss-cn-shenzhen.aliyuncs.com/image-20221202213940039.png)
 
-<center><p>The overall framework of the proposed CAP.</p></center
+<center>The overall framework of the proposed CAP.</center>
 
 
 
@@ -80,7 +80,7 @@ Coming soon!
 
 <img src="http://xiangkun-img.oss-cn-shenzhen.aliyuncs.com/image-20221202213719329.png" alt="image-20221202213719329" style="zoom: 50%;" />
 
-<center><p>Saliency map of three models under different training strategies.</p></center
+  <center>Saliency map of three models under different training strategies.</center>
 
 
 
