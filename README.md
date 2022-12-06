@@ -1,6 +1,6 @@
 # Toward Robust Diagnosis: A Contour Attention Preserving Adversarial Defense for COVID-19 Detection
 
-This repo is an official implementation of ["Toward Robust Diagnosis: A Contour Attention Preserving Adversarial Defense for COVID-19 Detection"](https://github.com/Quinn777/CAP), which is accepted by AAAI 2023. 
+This repo is an official implementation of ["Toward Robust Diagnosis: A Contour Attention Preserving Adversarial Defense for COVID-19 Detection"](https://arxiv.org/abs/2211.16806), which is accepted by AAAI 2023. 
 
 
 
@@ -30,28 +30,28 @@ pip3 install -r requirements.txt
 
 Download and extract all the datasets:
 
-- SARS-COV-2
-- COVID19-C
-- MosMed-L
-- MosMed-M
+- [SARS-COV-2](https://drive.google.com/file/d/1jq6WE_wIDA41Rj5gmA8xEcbULIizQ5ey/view?usp=sharing)
+- [COVID19-C](https://drive.google.com/file/d/1fGIGyviMpzFi9wN1FZiXNHR_HQPhjIrg/view?usp=sharing)
+- [MosMed-L](https://drive.google.com/file/d/1D_vUhEuNWEblrfh2-eqFX7RQxZLQ0laP/view?usp=sharing)
+- [MosMed-M](https://drive.google.com/file/d/1bdrmoVbSIXvCpqMGQgA2VSGbvcT1s3sS/view?usp=sharing)
 
 ![image-20221202214959823](http://xiangkun-img.oss-cn-shenzhen.aliyuncs.com/image-20221202214959823.png)
 
 <center><p>Detail information of the datasets.</p></center
 
-Run the following command for SARS-COV-2 with Visformer-tiny:
+Run the following command for SARS-COV-2 with pretrained [Visformer-tiny](https://drive.google.com/file/d/1n9LwZX8Y2LLKzkVqI-euKDdSeXCn35vB/view?usp=share_link):
 
 ```
 python main.py --config /configs/sars-visformer-cap.json
 ```
 
-Run the following command for SARS-COV-2 with Deit-tiny:
+Run the following command for SARS-COV-2 with pretrained [Deit-tiny](https://drive.google.com/file/d/1DbZ-4R72zzVzAfNmRpY5o_Ic7mg97EZ7/view?usp=sharing):
 
 ```
 python main.py --config /configs/sars-deit-cap.json
 ```
 
-Run the following command for MosMed-L with Visformer-tiny:
+Run the following command for MosMed-L with pretrained [Visformer-tiny](https://drive.google.com/file/d/1kf9OmQ8pavyoLi5KuXE2hUN1BN-Fw0rS/view?usp=sharing):
 
 ```
 python main.py --config /configs/mosmed-visformer-cap.json
@@ -70,12 +70,6 @@ You can select the training and testing method  by changing the status of parame
 
 
 
-## Model Zoo
-
-Coming soon!
-
-
-
 ## Visualization
 
 <img src="http://xiangkun-img.oss-cn-shenzhen.aliyuncs.com/image-20221202213719329.png" alt="image-20221202213719329" style="zoom: 50%;" />
@@ -89,9 +83,9 @@ Coming soon!
 If you find our code helpful for your research, please using the following bibtex to cite our paper:
 
 ```
-@article{xxx,
+@article{xiang2022toward,
   title={Toward Robust Diagnosis: A Contour Attention Preserving Adversarial Defense for COVID-19 Detection},
-  author={Kun Xiang, Xing Zhang, Jinwen She, Jinpeng Liu, Haohan Wang, Shiqi Deng, Shancheng Jiang},
+  author={Xiang, Kun and Zhang, Xing and She, Jinwen and Liu, Jinpeng and Wang, Haohan and Deng, Shiqi and Jiang, Shancheng},
   journal={arXiv preprint arXiv:2211.16806},
   year={2022}
 }
