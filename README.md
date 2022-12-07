@@ -30,10 +30,10 @@ pip3 install -r requirements.txt
 
 Download and extract all the datasets:
 
-- [SARS-COV-2](https://drive.google.com/file/d/1jq6WE_wIDA41Rj5gmA8xEcbULIizQ5ey/view?usp=sharing)
-- [COVID19-C](https://drive.google.com/file/d/1fGIGyviMpzFi9wN1FZiXNHR_HQPhjIrg/view?usp=sharing)
-- [MosMed-L](https://drive.google.com/file/d/1D_vUhEuNWEblrfh2-eqFX7RQxZLQ0laP/view?usp=sharing)
-- [MosMed-M](https://drive.google.com/file/d/1bdrmoVbSIXvCpqMGQgA2VSGbvcT1s3sS/view?usp=sharing)
+- [SARS-COV-2](https://www.kaggle.com/datasets/plameneduardo/sarscov2-ctscan-dataset)
+- [COVID19-C](https://www.kaggle.com/datasets/quinn777/covid19c)
+- [MosMed-L](https://www.kaggle.com/datasets/quinn777/mosmedlm)
+- [MosMed-M](https://www.kaggle.com/datasets/quinn777/mosmedlm)
 
 ![image-20221202214959823](http://xiangkun-img.oss-cn-shenzhen.aliyuncs.com/image-20221202214959823.png)
 
